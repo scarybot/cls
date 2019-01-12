@@ -7,9 +7,11 @@ module Cls
 
   def define_initialize(args)
     assignments = args.map { |a| "@#{a} = #{a}" }.join("\n")
+    alias_method :given_initialize, :initialize
     self.class_eval %{
       def initialize(#{args.join(", ")})
                      #{assignments}
+          given_initialize
       end
     }
   end

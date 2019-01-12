@@ -2,7 +2,11 @@ require "cls"
 
 class NamePresenter
   extend Cls
-  attr_reader :name
+  attr_reader :name, :initialized
+  def initialize
+    @initialized = true
+  end
+
   takes(:name)
   let(:yelled_name) { @name.upcase }
   let(:name_with_argument) { |other| }
@@ -49,6 +53,10 @@ describe Cls do
       expect do
         presenter.name_with_argument
       end.to raise_error(ArgumentError)
+    end
+
+    it 'should run the original initialize method' do
+        expect(presenter.initialized).to eq(true)
     end
   end
 
